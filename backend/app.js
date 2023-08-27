@@ -1,26 +1,33 @@
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
-import ConnectDB from "../backend/config/db.js";
+import ConnectDB from "./config/db.js";
 import colors from "colors";
-import itemRoutes from "../backend/routes/itemRoutes.js";
-import deliveryRoutes from "../backend/routes/deliveryRoutes.js";
-import orderRoutes from "../backend/routes/orderRoutes.js";
-import customersRoutes from "../backend/routes/customersRoutes.js";
+import itemRoutes from "./routes/itemRoutes.js";
+import deliveryRoutes from "./routes/deliveryRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import customersRoutes from "./routes/customersRoutes.js";
+import cors from "cors";
 dotenv.config();
 ConnectDB();
 
 const app = express();
+// if (process.env.NODE_ENV !== "production") {
+  
+// }
 
 app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("API is running....");
+});
 
 app.use("/api/item", itemRoutes);
 app.use("/api/delivery-vehicles", deliveryRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/customers", customersRoutes);
-app.get("/", (req, res) => {
-  res.send("API is running....");
-});
 
 const PORT = process.env.PORT || 5000;
 
@@ -31,3 +38,6 @@ app.listen(
       .yellow.bold
   )
 );
+
+// export default app;
+

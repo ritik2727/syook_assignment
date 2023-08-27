@@ -9,8 +9,8 @@ const createOrder = async (req, res) => {
 
     // Fetch customer's city and item's price
 
-  const customer = await Customers.findById(customerId);
- 
+    const customer = await Customers.findById(customerId);
+
     const item = await Item.findById(itemId);
 
     // Find an available delivery vehicle for the customer's city
@@ -47,16 +47,13 @@ const createOrder = async (req, res) => {
     res.status(500).json({ error: "Failed to create order" });
   }
 };
-const getAllOrders =async (req, res) => {
-    try {
-      const orders = await Order.find()
-        .populate('itemId') // Populate item details
-        .populate('customerId') // Populate customer details
-        .populate('deliveryVehicleId'); // Populate delivery vehicle details
-  
-      res.json(orders);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch orders' });
-    }
-  };
-export { createOrder,getAllOrders };
+const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+};
+export { createOrder, getAllOrders };

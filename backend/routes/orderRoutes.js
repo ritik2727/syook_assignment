@@ -10,7 +10,7 @@ const router = express.Router();
 //   updateItem,
 // } from "."
 
-router.route("/").post(createOrder).get(getAllOrders)
+router.route("/").get(getAllOrders).post(createOrder)
 
 
 
